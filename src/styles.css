@@ -3,7 +3,6 @@
     margin: 0 auto;
 }
 
-
 .search-form{
     display: flex;
     justify-content: center;
@@ -16,12 +15,30 @@
     width: 250px;
     height: 25px;
     border-radius: 10px;
+    border-style: none;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.form__input:focus{
+    border-color: rgb(255, 6, 159);
+    outline: none;
 }
 
 .form__btn{
-
+    width: 80px;
+    height: 25px;
+    color: rgb(50, 0, 186);
+    border-radius: 50px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    background-color: #fff;
+    cursor: pointer;
+    border-style: none;
 }
-
+.form__btn:hover{
+    background-color: rgb(255, 0, 247);
+    color: aliceblue;
+}
 
 
 .gallery {
@@ -54,17 +71,84 @@ img {
 }
 
 
-
 .info-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
 }
+
 
 .load-more {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 40px;
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    justify-content: center;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    outline: none;
 }
 
+.load {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    padding: 0;
+    border: none;
+    background: rgb(0, 170, 255);
+    background: linear-gradient(0deg, rgb(0, 89, 255) 0%, rgb(2, 131, 251) 100%);
+}
+
+.load:hover {
+    color: #1109f0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.load:before,
+.load:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #0d09f0;
+    box-shadow:
+        -1px -1px 5px 0px #fff,
+        7px 7px 20px 0px #0003,
+        4px 4px 5px 0px #0002;
+    transition: 400ms ease all;
+}
+
+.load:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+.load:hover:before,
+.load:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
+}

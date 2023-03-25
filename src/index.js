@@ -1,6 +1,6 @@
 import axios from "axios";
 import Notiflix from "notiflix";
-import simpleLightbox from "simplelightbox";
+import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css"; 
 
 // пошук по елементам
@@ -17,6 +17,9 @@ refs.btnLoadMore.style.display = 'none';
 refs.form.addEventListener('submit', onSearch);
 refs.btnLoadMore.addEventListener('click', onBtnLoadMore);
 
+//екземпляр модального вікна слайдера-зображень
+let simpleGallery = new SimpleLightbox('.gallery a'); 
+
 function onSearch(e) {
     e.preventDefault();
 
@@ -28,21 +31,18 @@ function onSearch(e) {
     if (name !== '') {
         pixabay(name)
     } else {
-        refs.btnLoadMore.style.display = 'none';
-        Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+        // refs.btnLoadMore.style.display = 'none';
+        Notiflix.Notify.failure("The search field can't be empty. Please, enter your request.");
     }
 }
-
 
 
 //робота з кнопкою LOAD MORE
 function onBtnLoadMore() {
     const name = refs.input.value.trim();
-    page = + 1,
+    page =+ 1,
     pixabay(name, page);
 }
-
-
 
 
 
@@ -65,20 +65,21 @@ async function pixabay(name, page) {
 
     try {
         const response = await axios.get(API_URL, options)
-    
+        if (response.data.totalHits > 40) {
+            refs.btnLoadMore.style.display = 'flex';
+        };
         //Повідомлення про знайдені дані
-        if (response.data.hits.length === 0) {
+        if (response.data.totalHits === 0) {
             Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')   
-        } else {
+        };
+        if (response.data.totalHits > 0) {
             Notiflix.Notify.success(`Hoorray! We found ${response.data.totalHits}`)
-        }
+        };
         
         //виклик функції для рендеру даних на сторінку
         createMarkup(response.data);
 
-        if (page === 1) {
-            refs.btnLoadMore.style.display = 'flex';
-        }
+        
     } catch (error) {
         console.log(error);
     } 
@@ -110,13 +111,7 @@ function createMarkup(array) {
 </a>`
 )
 .join('');
-    
     refs.gallery.insertAdjacentHTML('beforeend', markup);
-    simpleLightbox.refresh();
+    simpleGallery.refresh();
 }
 
-//екземпляр модального вікна слайдера-зображень
-const simpleLightbox = new simpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-}); 
